@@ -1,0 +1,11 @@
+.content {
+    grid-area: c;
+    background-color: antiquewhite;
+}
+
+.mainImage{
+    height: 150px;
+    width: 1000px;
+}
+
+
