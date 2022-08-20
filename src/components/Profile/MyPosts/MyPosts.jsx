@@ -1,13 +1,26 @@
 import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
 
-const MyPosts = () => {
+const MyPosts = (props) => {
+
+    let postData = [
+        {
+            postId: 1,
+            postText: 'My first post'
+        },
+        {
+            postId: 2,
+            postText: 'My second post'
+        }
+    ]
+
+    let postElements = postData.map(post => <Post text={post.postText}/>)
+
     return (
-        <div>
+        <div className={s.myPosts}>
             My posts
             <div>
-                <Post text='My first post'/>
-                <Post text='My second post'/>
+                {postElements}
             </div>
         </div>
     )
