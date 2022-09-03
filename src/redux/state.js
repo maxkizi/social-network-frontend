@@ -1,3 +1,6 @@
+const ADD_POST = 'ADD_POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
+
 let postData = [
     {
         postId: 1,
@@ -61,10 +64,10 @@ let store = {
 
     dispatch(action) {
         switch (action.type) {
-            case 'ADD_POST':
+            case ADD_POST:
                 this._addPost()
                 break
-            case 'UPDATE_NEW_POST_TEXT':
+            case UPDATE_NEW_POST_TEXT:
                 this._updateNewPostText(action.newPostText)
                 break
             default:
@@ -88,6 +91,19 @@ let store = {
     _updateNewPostText(newPostText) {
         this._state.profileState.newPostText = newPostText
         this._rerenderEntireTree(this._state)
+    }
+}
+
+export const addPostActionCreator = () => {
+    return {
+        type: ADD_POST
+    }
+}
+
+export const updateNewPostTextActionCreator = (newText) => {
+    return {
+        type: UPDATE_NEW_POST_TEXT,
+        newPostText: newText
     }
 }
 
