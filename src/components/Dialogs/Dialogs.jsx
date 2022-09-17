@@ -6,7 +6,6 @@ import {addNewMessageActionCreator, updateNewMessageTextActionCreator} from "../
 
 const Dialogs = (props) => {
 
-
     let dialogElements = props.dialogsState.dialogs.map(dialog => <DialogItem dialogId={dialog.dialogId}
                                                                               dialogName={dialog.dialogName}/>)
 

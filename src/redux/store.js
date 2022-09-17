@@ -1,8 +1,9 @@
 import dialogReducer from "./dialogs-reducer";
 import profileReducer from "./profile-reducer";
+import sidebarReducer from "./sidebar-reducer";
 
 
-let postData = [
+export let postData = [
     {
         postId: 1,
         postText: 'My first post'
@@ -13,7 +14,7 @@ let postData = [
     }
 ]
 
-let dialogData = [
+export let dialogData = [
     {
         dialogId: 1,
         dialogName: 'Dima'
@@ -32,7 +33,7 @@ let dialogData = [
     }
 ]
 
-let messageData = [
+export let messageData = [
     {
         messageId: 1,
         messageText: 'Hello!'
@@ -66,8 +67,9 @@ let store = {
     },
 
     dispatch(action) {
-        dialogReducer(action, this._state)
-        profileReducer(action, this._state)
+        this.state = dialogReducer(this._state.dialogsState, action)
+        this.state = profileReducer(this._state.profileState, action)
+        this.state = sidebarReducer(this._state.sidebarState, action)
         this._rerenderEntireTree(this._state)
     },
 
