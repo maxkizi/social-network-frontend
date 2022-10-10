@@ -13,7 +13,6 @@ const MyPosts = (props) => {
     }
 
     let onPostTextAreaChange = () => {
-        debugger
         let newText = newPostElement.current.value
         props.updatePostText(newText)
     }
