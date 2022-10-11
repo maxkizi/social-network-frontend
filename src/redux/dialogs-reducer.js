@@ -3,54 +3,56 @@ const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE'
 let idCounter = 3
 
 let initialState = {
-        dialogs: [
-            {
-                dialogId: 1,
-                dialogName: 'Dima'
-            },
-            {
-                dialogId: 2,
-                dialogName: 'Sveta'
-            },
-            {
-                dialogId: 3,
-                dialogName: 'Anna'
-            },
-            {
-                dialogId: 4,
-                dialogName: 'Pavel'
-            }
-        ],
-        messages: [
-            {
-                messageId: 1,
-                messageText: 'Hello!'
-            },
-            {
-                messageId: 2,
-                messageText: 'How are you?'
-            },
-        ],
-        newMessageText: ''
+    dialogs: [
+        {
+            dialogId: 1,
+            dialogName: 'Dima'
+        },
+        {
+            dialogId: 2,
+            dialogName: 'Sveta'
+        },
+        {
+            dialogId: 3,
+            dialogName: 'Anna'
+        },
+        {
+            dialogId: 4,
+            dialogName: 'Pavel'
+        }
+    ],
+    messages: [
+        {
+            messageId: 1,
+            messageText: 'Hello!'
+        },
+        {
+            messageId: 2,
+            messageText: 'How are you?'
+        },
+    ],
+    newMessageText: ''
 }
 
 const dialogReducer = (state = initialState, action) => {
-    let newState = {...state}
     switch (action.type) {
         case ADD_NEW_MESSAGE:
             let newMessage = {
                 messageId: idCounter++,
                 messageText: state.newMessageText
             }
-            newState.messages = [...state.messages]
-            newState.messages.push(newMessage)
-            newState.newMessageText = ''
-            return newState;
+            return {
+                ...state,
+                messages: [...state.messages, newMessage],
+                newMessageText: ''
+            }
         case UPDATE_NEW_MESSAGE_TEXT:
-            newState.newMessageText = action.newMessageText
-            return newState
+            return {
+                ...state,
+                newMessageText: action.newMessageText
+            }
         default:
-            return newState
+            return state
     }
 }
 export const addNewMessageActionCreator = () => {
