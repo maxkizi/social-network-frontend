@@ -1,31 +1,37 @@
 import User from "./User/User";
-import  axios from "axios"
+import axios from "axios"
+import React from "react";
 
-const initialUsers = [
-    {id: 1, name: 'Dmitry', followed: true, status: 'some status', location: {country: 'Russia', city: 'Moscow'}},
-    {id: 2, name: 'Maxim', followed: false, status: 'some status', location: {country: 'Russia', city: 'Kirov'}},
-    {id: 3, name: 'Anton', followed: true, status: 'some status', location: {country: 'Belarus', city: 'Minsk'}}
-]
+class Users extends React.Component {
 
-let Users = (props) => {
-    if (props.users.length === 0) {
+    constructor(props) {
+        super(props);
         axios.get("http://localhost:8080/api/v1/users").then(response => {
             debugger
-            props.setUsers(response.data)
+            this.props.setUsers(response.data)
         })
     }
-    const users = props.users.map(u => <User id={u.id}
-                                             name={u.name}
-                                             followed={u.followed}
-                                             status={u.status}
-                                             location={u.location}
-                                             follow={props.follow}
-                                             unfollow={props.unfollow}/>)
-    return (
-        <div>
-            {users}
-        </div>
-    )
+
+    __mapUsers() {
+        return (
+            this.props.users.map(u => <User id={u.id}
+                                            name={u.name}
+                                            followed={u.followed}
+                                            status={u.status}
+                                            location={u.location}
+                                            follow={this.props.follow}
+                                            unfollow={this.props.unfollow}/>)
+        )
+    }
+
+    render = () => {
+        return (
+            <div>
+                {this.__mapUsers()}
+            </div>
+        )
+    }
 }
+
 
 export default Users
