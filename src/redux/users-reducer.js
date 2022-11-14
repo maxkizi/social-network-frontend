@@ -8,7 +8,6 @@ const initialState = {
 
 
 const usersReducer = (state = initialState, action) => {
-    debugger
     switch (action.type) {
         case FOLLOW:
             return {
@@ -33,7 +32,7 @@ const usersReducer = (state = initialState, action) => {
         case SET_USERS:
             const newState = {
                 ...state,
-                users: [...state.users,...action.users]
+                users: [...state.users, ...action.users]
             }
             return newState
         default:

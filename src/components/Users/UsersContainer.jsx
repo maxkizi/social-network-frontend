@@ -4,7 +4,6 @@ import {followActionCreator, setUsersActionCreator, unfollowActionCreator} from 
 
 
 const mapStateToProps = (state) => {
-    debugger
     return {
         users: state.usersState.users
     }

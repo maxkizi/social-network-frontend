@@ -1,4 +1,5 @@
 import User from "./User/User";
+import  axios from "axios"
 
 const initialUsers = [
     {id: 1, name: 'Dmitry', followed: true, status: 'some status', location: {country: 'Russia', city: 'Moscow'}},
@@ -7,9 +8,11 @@ const initialUsers = [
 ]
 
 let Users = (props) => {
-    debugger
     if (props.users.length === 0) {
-        props.setUsers(initialUsers)
+        axios.get("http://localhost:8080/api/v1/users").then(response => {
+            debugger
+            props.setUsers(response.data)
+        })
     }
     const users = props.users.map(u => <User id={u.id}
                                              name={u.name}
