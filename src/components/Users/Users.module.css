@@ -1,0 +1,11 @@
+.pageNumbers {
+    padding: 10px
+
+}
+
+.activePageNumber {
+    font-weight: bold;
+}
+
+.pageNumbers {
+}
