@@ -1,0 +1,15 @@
+.Users {
+
+}
+
+.pageNumber {
+    cursor: pointer;
+    margin-left: 5px;
+
+}
+
+.selectedPageNumber {
+    composes: pageNumber;
+    font-weight: bold;
+}
+
