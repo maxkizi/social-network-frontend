@@ -1,30 +1,30 @@
 import s from "./User.module.css"
+import userAvatar from "../../../assets/images/userAvatar.jpg"
 
 const User = (props) => {
     const follow = () => {
         props.follow(props.id)
     }
-
     const unfollow = () => {
         props.unfollow(props.id)
     }
-
     return (
-        <div className={s.user}>
+        <div className={s.item}>
             <div>
-                name: {props.name}
+                <img src={props.userPhotoUrl != null ? props.userPhotoUrl : userAvatar} className={s.avatar}/>
             </div>
             <div>
-                status: {props.status}
+                First name: {props.firstName}
             </div>
             <div>
-                country: {props.location.country}
+                Last name: {props.lastName}
             </div>
             <div>
-                city: {props.location.city}
+                Country: {props.country}
             </div>
             <div>
-                {props.followed?<button onClick={unfollow}>unfollow</button> : <button onClick={follow}>follow</button>}
+                {props.followed ? <button onClick={unfollow}>unfollow</button> :
+                    <button onClick={follow}>follow</button>}
             </div>
         </div>
     )

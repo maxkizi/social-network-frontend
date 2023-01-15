@@ -1,3 +1,11 @@
-.user {
-    padding: 10px;
+.item {
+    padding-top: 5px;
+    padding-left: 5px;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    height: 110px;
+    width: 100px;
+    border-radius: 60%;
 }

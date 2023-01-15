@@ -1,44 +1,42 @@
-import s from "./Users.module.css"
-import User from "./User/User";
+import s from "./Users.module.css";
 import React from "react";
+import User from "./User/User";
 
 const Users = (props) => {
-
-    const totalPageCount = Math.ceil(props.totalUsersCount / props.pageSize)
-    const pageNums = []
-
-    for (let i = 1; i < totalPageCount; i++) {
-        pageNums.push(i)
+    const getTotalPageNums = () => {
+        let pageCount = Math.ceil(props.totalUsersCount / props.pageSize)
+        let result = []
+        for (let i = 1; i <= pageCount; i++) {
+            result.push(
+                <span onClick={() => {
+                    props.onPageChange(i)
+                }}
+                      className={i === props.currentPage ? s.selectedPageNumber : s.pageNumber}>{i}</span>
+            )
+        }
+        return result
     }
-
-    const mapUsers = () => {
-        return (
-            props.users.map(u => <User id={u.id}
-                                       name={u.name}
-                                       followed={u.followed}
-                                       status={u.status}
-                                       location={u.location}
-                                       follow={props.follow}
-                                       unfollow={props.unfollow}/>)
-        )
+    const mapUsersToJsx = () => {
+        return props.users.map(u => <User id={u.id}
+                                          userPhotoUrl={u.userPhotoUrl}
+                                          firstName={u.firstName}
+                                          lastName={u.lastName}
+                                          country={u.country}
+                                          followed={u.followed}
+                                          follow={props.follow}
+                                          unfollow={props.unfollow}/>)
     }
     return (
         <div>
-            <div className={s.pageNumbers}>
-                {
-                    pageNums.map(pageNumber => {
-                        return <span
-                            className={pageNumber === props.currentPage ? s.activePageNumber : s.pageNumber}
-                            onClick={() => {
-                                props.onPageChange(pageNumber)
-                            }}>{pageNumber} </span>
-                    })
-                }
-            </div>
             <div>
-                {mapUsers()}
+                {getTotalPageNums()}
             </div>
-        </div>)
+
+            <div className={s.Users}>
+                {mapUsersToJsx()}
+            </div>
+        </div>
+    )
 }
 
 export default Users

@@ -1,75 +1,80 @@
-import {connect} from "react-redux";
 import {
     followActionCreator,
     setCurrentPageActionCreator,
     setTotalUsersCountActionCreator,
     setUsersActionCreator,
     unfollowActionCreator
-} from "../../redux/users-reducer";
+} from "../../redux/users-reduser";
+import {connect} from "react-redux";
 import React from "react";
 import axios from "axios";
 import Users from "./Users";
 
+class UsersRestClientContainer extends React.Component {
+    __sendRequest = (pageNumber) => {
+        let baseUrl = "http://localhost:8080/api/v1/users"
+        const searchParams = new URLSearchParams();
+        searchParams.append("size", this.props.pageSize)
+        searchParams.append("page", (pageNumber - 1).toString())
 
-class UsersApiComponent extends React.Component {
-
+        axios.get(baseUrl + "?" + searchParams.toString()).then(response => {
+            this.props.setTotalUsersCount(response.data.totalElements)
+            this.props.setUsers(response.data.content)
+        })
+    }
 
     onPageChange = (pageNumber) => {
         this.props.setCurrentPage(pageNumber)
-        axios.get(`http://localhost:8080/api/v1/users?page=${pageNumber}&size=${this.props.pageSize}`)
-            .then(response => {
-                this.props.setTotalUserCount(response.data.totalElements)
-                this.props.setUsers(response.data.content)
-            });
+        this.__sendRequest(pageNumber)
     }
 
-
-    componentDidMount = () => {
-        axios.get(`http://localhost:8080/api/v1/users?page=${this.props.currentPage}&size=${this.props.pageSize}`)
-            .then(response => {
-                this.props.setTotalUserCount(response.data.totalElements)
-                this.props.setUsers(response.data.content)
-            });
-    }
 
     render = () => {
-        return <Users totalUsersCount={this.props.totalUsersCount}
-                      pageSize={this.props.pageSize}
-                      onPageChange={this.onPageChange}
-                      users={this.props.users}/>
+        return (
+            <div>
+                <Users totalUsersCount={this.props.totalUsersCount}
+                       pageSize={this.props.pageSize}
+                       onPageChange={this.onPageChange}
+                       currentPage={this.props.currentPage}
+                       users={this.props.users}
+                       follow={this.props.follow}
+                       unfollow={this.props.unfollow}/>
+            </div>
+        )
+    }
+
+    componentDidMount() {
+        this.__sendRequest()
     }
 }
 
 const mapStateToProps = (state) => {
     return {
         users: state.usersState.users,
+        totalUsersCount: state.usersState.totalUsersCount,
         currentPage: state.usersState.currentPage,
-        pageSize: state.usersState.pageSize,
-        totalUsersCount: state.usersState.totalUsersCount
+        pageSize: state.usersState.pageSize
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        follow: (id) => {
-            dispatch(followActionCreator(id))
-        },
-
-        unfollow: (id) => {
-            dispatch(unfollowActionCreator(id))
-        },
-
         setUsers: (users) => {
             dispatch(setUsersActionCreator(users))
         },
-
-        setTotalUserCount: (totalUserCount) => {
-            dispatch(setTotalUsersCountActionCreator(totalUserCount))
+        follow: (id) => {
+            dispatch(followActionCreator(id))
         },
-
-        setCurrentPage: (pageNumber) => {
-            dispatch(setCurrentPageActionCreator(pageNumber))
+        unfollow: (id) => {
+            dispatch(unfollowActionCreator(id))
+        },
+        setTotalUsersCount: (totalUsersCount) => {
+            dispatch(setTotalUsersCountActionCreator(totalUsersCount))
+        },
+        setCurrentPage: (currentPage) => {
+            dispatch(setCurrentPageActionCreator(currentPage))
         }
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(UsersApiComponent)
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersRestClientContainer)
