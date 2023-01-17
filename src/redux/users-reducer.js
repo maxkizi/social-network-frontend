@@ -2,91 +2,105 @@ const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
-const SET_CURRENT_PAGE_ACTION_CREATOR = 'SET_CURRENT_PAGE_ACTION_CREATOR'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_FETCHING = 'SET_FETCHING'
+
+
 const initialState = {
     users: [],
-    totalUsersCount: 0,
+    currentPage: 1,
     pageSize: 5,
-    currentPage: 1
+    totalUsersCount: 0,
+    isFetching: false
 }
-
 
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case FOLLOW:
+            let usersCopy = state.users.map(u => {
+                if (u.id === action.userId) {
+                    return {...u, followed: true}
+                }
+                return u
+            })
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.id)
-                        u.followed = true
-                    return u
-                })
+                users: usersCopy
             }
-
         case UNFOLLOW:
             return {
                 ...state,
                 users: state.users.map(u => {
-                    if (u.id === action.id)
-                        u.followed = false
+                    if (u.id === action.userId) {
+                        return {...u, followed: false}
+                    }
                     return u
                 })
             }
-
         case SET_USERS:
             return {
                 ...state,
                 users: [...action.users]
             }
-
         case SET_TOTAL_USERS_COUNT:
             return {
-                ...state,
-                totalUsersCount: action.totalUsersCount
+                ...state, totalUsersCount: action.totalUsersCount
             }
-        case SET_CURRENT_PAGE_ACTION_CREATOR:
+        case SET_CURRENT_PAGE:
             return {
-                ...state,
-                currentPage: action.pageNumber
+                ...state, currentPage: action.pageNumber
+            }
+        case SET_FETCHING:
+            return {
+                ...state, isFetching: action.isFetching
             }
         default:
             return state
     }
 }
 
-export const followActionCreator = (id) => {
+export const follow = (userId) => {
     return {
-        type: FOLLOW,
-        id: id
+        userId: userId,
+        type: FOLLOW
     }
 }
 
-export const unfollowActionCreator = (id) => {
+export const unfollow = (userId) => {
     return {
-        type: UNFOLLOW,
-        id: id
+        userId: userId,
+        type: UNFOLLOW
     }
 }
 
-export const setUsersActionCreator = (users) => {
+export const setUsers = (users) => {
     return {
-        type: SET_USERS,
-        users: users
+        users: users,
+        type: SET_USERS
     }
 }
 
-export const setTotalUsersCountActionCreator = (totalUsersCount) => {
+export const setTotalUsersCount = (totalUsersCount) => {
     return {
-        type: SET_TOTAL_USERS_COUNT,
-        totalUsersCount: totalUsersCount
+        totalUsersCount: totalUsersCount,
+        type: SET_TOTAL_USERS_COUNT
     }
 }
 
-export const setCurrentPageActionCreator = (pageNumber) => {
+export const setCurrentPage = (pageNumber) => {
     return {
-        type: SET_CURRENT_PAGE_ACTION_CREATOR,
-        pageNumber: pageNumber
+        pageNumber: pageNumber,
+        type: SET_CURRENT_PAGE
     }
 }
+
+export const setFetching = (isFetching) => {
+    return {
+        isFetching: isFetching,
+        type: SET_FETCHING
+    }
+}
+
 
 export default usersReducer
+

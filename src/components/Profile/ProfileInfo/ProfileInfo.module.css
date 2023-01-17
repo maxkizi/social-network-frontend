@@ -6,3 +6,8 @@
 .avaAndDescBlock {
     padding: 10px;
 }
+
+.avaAndDescBlock img{
+    width: 200px;
+    height: 200px;
+}

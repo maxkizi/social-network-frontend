@@ -1,5 +1,7 @@
 const ADD_POST = 'ADD_POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
+const SET_CURRENT_PROFILE = 'SET_CURRENT_PROFILE'
+
 let postId = 3
 
 const initial_state = {
@@ -13,7 +15,8 @@ const initial_state = {
             postText: 'My second post'
         }
     ],
-    newPostText: ''
+    newPostText: '',
+    profileData: null
 }
 
 const profileReducer = (state = initial_state, action) => {
@@ -33,6 +36,10 @@ const profileReducer = (state = initial_state, action) => {
                 ...state,
                 newPostText: action.newPostText
             }
+        case SET_CURRENT_PROFILE:
+            return {
+                ...state, profileData: action.profileData
+            }
         default:
             return state
     }
@@ -48,6 +55,13 @@ export const updateNewPostTextActionCreator = (newText) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newPostText: newText
+    }
+}
+
+export const setProfileData = (profileData) => {
+    return {
+        type: SET_CURRENT_PROFILE,
+        profileData
     }
 }
 

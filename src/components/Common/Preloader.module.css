@@ -1,0 +1,13 @@
+.preloader {
+
+}
+
+.preloader img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 25px;
+    height: 25px;
+}

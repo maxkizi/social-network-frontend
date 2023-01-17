@@ -1,10 +1,10 @@
 import {
-    followActionCreator,
-    setCurrentPageActionCreator,
-    setTotalUsersCountActionCreator,
-    setUsersActionCreator,
-    unfollowActionCreator
-} from "../../redux/users-reduser";
+    follow,
+    setCurrentPage, setFetching,
+    setTotalUsersCount,
+    setUsers,
+    unfollow
+} from "../../redux/users-reducer";
 import {connect} from "react-redux";
 import React from "react";
 import axios from "axios";
@@ -17,9 +17,11 @@ class UsersRestClientContainer extends React.Component {
         searchParams.append("size", this.props.pageSize)
         searchParams.append("page", (pageNumber - 1).toString())
 
+        this.props.setFetching(true)
         axios.get(baseUrl + "?" + searchParams.toString()).then(response => {
             this.props.setTotalUsersCount(response.data.totalElements)
             this.props.setUsers(response.data.content)
+            this.props.setFetching(false)
         })
     }
 
@@ -38,7 +40,8 @@ class UsersRestClientContainer extends React.Component {
                        currentPage={this.props.currentPage}
                        users={this.props.users}
                        follow={this.props.follow}
-                       unfollow={this.props.unfollow}/>
+                       unfollow={this.props.unfollow}
+                       isFetching={this.props.isFetching}/>
             </div>
         )
     }
@@ -53,28 +56,18 @@ const mapStateToProps = (state) => {
         users: state.usersState.users,
         totalUsersCount: state.usersState.totalUsersCount,
         currentPage: state.usersState.currentPage,
-        pageSize: state.usersState.pageSize
+        pageSize: state.usersState.pageSize,
+        isFetching: state.usersState.isFetching
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setUsers: (users) => {
-            dispatch(setUsersActionCreator(users))
-        },
-        follow: (id) => {
-            dispatch(followActionCreator(id))
-        },
-        unfollow: (id) => {
-            dispatch(unfollowActionCreator(id))
-        },
-        setTotalUsersCount: (totalUsersCount) => {
-            dispatch(setTotalUsersCountActionCreator(totalUsersCount))
-        },
-        setCurrentPage: (currentPage) => {
-            dispatch(setCurrentPageActionCreator(currentPage))
-        }
-    }
+const mapDispatchToProps = {
+    setUsers,
+    follow,
+    unfollow,
+    setTotalUsersCount,
+    setCurrentPage,
+    setFetching
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersRestClientContainer)

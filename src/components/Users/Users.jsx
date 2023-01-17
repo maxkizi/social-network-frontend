@@ -1,6 +1,7 @@
 import s from "./Users.module.css";
 import React from "react";
 import User from "./User/User";
+import Preloader from "../Common/Preloader";
 
 const Users = (props) => {
     const getTotalPageNums = () => {
@@ -8,10 +9,7 @@ const Users = (props) => {
         let result = []
         for (let i = 1; i <= pageCount; i++) {
             result.push(
-                <span onClick={() => {
-                    props.onPageChange(i)
-                }}
-                      className={i === props.currentPage ? s.selectedPageNumber : s.pageNumber}>{i}</span>
+                <span onClick={() => {props.onPageChange(i)}} className={i === props.currentPage ? s.selectedPageNumber : s.pageNumber}>{i}</span>
             )
         }
         return result
@@ -29,12 +27,16 @@ const Users = (props) => {
     return (
         <div>
             <div>
+                {props.isFetching ? <Preloader/> : null}
+            </div>
+            <div>
                 {getTotalPageNums()}
             </div>
 
-            <div className={s.Users}>
+            <div className={s.users}>
                 {mapUsersToJsx()}
             </div>
+
         </div>
     )
 }

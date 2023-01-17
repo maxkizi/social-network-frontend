@@ -2,7 +2,7 @@ import {configureStore} from '@reduxjs/toolkit'
 import profileReducer from "./profile-reducer";
 import dialogReducer from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
-import usersReducer from "./users-reduser";
+import usersReducer from "./users-reducer";
 
 const reducers = {
     profileState: profileReducer,
