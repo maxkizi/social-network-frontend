@@ -11,6 +11,7 @@ import axios from "axios";
 import Users from "./Users";
 
 class UsersRestClientContainer extends React.Component {
+
     __sendRequest = (pageNumber) => {
         let baseUrl = "http://localhost:8080/api/v1/users"
         const searchParams = new URLSearchParams();

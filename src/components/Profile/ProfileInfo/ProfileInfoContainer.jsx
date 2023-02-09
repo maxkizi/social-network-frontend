@@ -3,11 +3,18 @@ import {connect} from "react-redux";
 import axios from "axios";
 import {setProfileData} from "../../../redux/profile-reducer";
 import ProfileInfo from "./ProfileInfo";
+import Preloader from "../../Common/Preloader";
+import {withRouter} from "../../../redux/redux-store";
 
 class ProfileInfoContainer extends React.Component {
 
     __sendRequest = () => {
-        axios.get('http://localhost:8080/api/v1/profile/1').then(response => {
+        let id = this.props.router.params.userId
+
+        if (!id) {
+            id = 1
+        }
+        axios.get('http://localhost:8080/api/v1/profile/' + id).then(response => {
             this.props.setProfileData(response.data)
         })
     }
@@ -18,7 +25,7 @@ class ProfileInfoContainer extends React.Component {
 
     render = () => {
         if (!this.props.profileData) {
-            return <></>
+            return <Preloader/>
         }
         return (
             <ProfileInfo {...this.props}/>
@@ -36,5 +43,5 @@ const mapDispatchToProps = {
     setProfileData
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileInfoContainer)
-// export default ProfileInfoContainer
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ProfileInfoContainer))
