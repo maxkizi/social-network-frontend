@@ -4,12 +4,14 @@ import dialogReducer from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 import usersReducer from "./users-reducer";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
+import authReducer from "./auth-reducer";
 
 const reducers = {
     profileState: profileReducer,
     dialogsState: dialogReducer,
     sidebarState: sidebarReducer,
-    usersState: usersReducer
+    usersState: usersReducer,
+    authState: authReducer
 }
 
 let store = configureStore({

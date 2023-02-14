@@ -18,8 +18,12 @@ class UsersRestClientContainer extends React.Component {
         searchParams.append("size", this.props.pageSize)
         searchParams.append("page", (pageNumber - 1).toString())
 
+        const requestConfig = {
+            withCredentials: true
+        }
+
         this.props.setFetching(true)
-        axios.get(baseUrl + "?" + searchParams.toString()).then(response => {
+        axios.get(baseUrl + "?" + searchParams.toString(), requestConfig).then(response => {
             this.props.setTotalUsersCount(response.data.totalElements)
             this.props.setUsers(response.data.content)
             this.props.setFetching(false)

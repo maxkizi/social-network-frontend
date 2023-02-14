@@ -6,15 +6,19 @@ import ProfileInfo from "./ProfileInfo";
 import Preloader from "../../Common/Preloader";
 import {withRouter} from "../../../redux/redux-store";
 
-class ProfileInfoContainer extends React.Component {
+class ProfileInfoRestContainer extends React.Component {
 
     __sendRequest = () => {
         let id = this.props.router.params.userId
 
         if (!id) {
-            id = 1
+            id = this.props.currentUserId
         }
-        axios.get('http://localhost:8080/api/v1/profile/' + id).then(response => {
+
+        const requestConfig = {
+            withCredentials: true
+        }
+        axios.get('http://localhost:8080/api/v1/profile/' + id, requestConfig).then(response => {
             this.props.setProfileData(response.data)
         })
     }
@@ -35,7 +39,8 @@ class ProfileInfoContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        profileData: state.profileState.profileData
+        profileData: state.profileState.profileData,
+        currentUserId: state.authState.currentUserId
     }
 }
 
@@ -44,4 +49,4 @@ const mapDispatchToProps = {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ProfileInfoContainer))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ProfileInfoRestContainer))
