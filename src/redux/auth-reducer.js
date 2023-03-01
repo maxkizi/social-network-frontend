@@ -7,7 +7,7 @@ const SET_AUTH = 'SET_AUTH'
 const initialState = {
     login: null,
     password: null,
-    currentUserId: null,
+    currentUserId: 1,
     isAuth: false
 }
 

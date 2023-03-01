@@ -23,9 +23,6 @@ const ProfileInfo = (props) => {
                     Country: {data.country}
                 </div>
                 <div>
-                    Followed: {data.followed.toString()}
-                </div>
-                <div>
                     Info: {data.info}
                 </div>
                 <div>

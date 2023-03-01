@@ -20,7 +20,7 @@ const Users = (props) => {
                                           firstName={u.firstName}
                                           lastName={u.lastName}
                                           country={u.country}
-                                          followed={u.followed}
+                                          isFollow={u.isFollow}
                                           follow={props.follow}
                                           unfollow={props.unfollow}/>)
     }

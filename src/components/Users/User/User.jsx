@@ -1,13 +1,27 @@
 import s from "./User.module.css"
 import userAvatar from "../../../assets/images/userAvatar.jpg"
 import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 const User = (props) => {
     const follow = () => {
-        props.follow(props.id)
+        const requestConfig = {
+            withCredentials: true
+        }
+        axios.post("http://localhost:8080/api/v1/follow/" + props.id, null, requestConfig)
+            .then(response => {
+                props.follow(props.id)
+            })
+
     }
     const unfollow = () => {
-        props.unfollow(props.id)
+        const requestConfig = {
+            withCredentials: true
+        }
+        axios.delete("http://localhost:8080/api/v1/follow/" + props.id, requestConfig)
+            .then(response => {
+                props.unfollow(props.id)
+            })
     }
     return (
         <div className={s.item}>
@@ -26,7 +40,7 @@ const User = (props) => {
                 Country: {props.country}
             </div>
             <div>
-                {props.followed ? <button onClick={unfollow}>unfollow</button> :
+                {props.isFollow ? <button onClick={unfollow}>unfollow</button> :
                     <button onClick={follow}>follow</button>}
             </div>
         </div>
