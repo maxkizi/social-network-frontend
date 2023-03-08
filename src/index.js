@@ -16,4 +16,4 @@ root.render(
     </BrowserRouter>
 )
 
-window.mystore = store
+window.getState = store.getState

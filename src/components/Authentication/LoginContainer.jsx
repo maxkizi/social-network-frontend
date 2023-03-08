@@ -1,32 +1,22 @@
 import {changeLogin, changePassword, setAuth, setCurrentUserId} from "../../redux/auth-reducer";
 import Login from "./Login";
 import {connect} from "react-redux";
-import axios from "axios";
+import {authApi} from "../../api/api";
 
 
 const LoginRestContainer = (props) => {
-
-
     const signIn = () => {
         const data = {
             username: props.login,
             password: props.password
         }
 
-        axios.post("http://localhost:8080/login", data,
-            {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Accept': 'application/json, text/plain, */*'
-                },
-                withCredentials: true
-            }).then(response => {
+        authApi.loginRequest(data).then(response => {
             const id = response.data.id
-            if(id){
+            if (id) {
                 props.setCurrentUserId(response.data.id)
                 props.setAuth(true)
             }
-
         })
     }
 

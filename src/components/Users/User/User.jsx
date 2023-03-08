@@ -1,27 +1,18 @@
 import s from "./User.module.css"
 import userAvatar from "../../../assets/images/userAvatar.jpg"
 import {NavLink} from "react-router-dom";
-import axios from "axios";
+import {usersApi} from "../../../api/api";
 
 const User = (props) => {
     const follow = () => {
-        const requestConfig = {
-            withCredentials: true
-        }
-        axios.post("http://localhost:8080/api/v1/follow/" + props.id, null, requestConfig)
-            .then(response => {
-                props.follow(props.id)
-            })
-
+        usersApi.followRequest(props.id).then(response => {
+            props.follow(props.id)
+        })
     }
     const unfollow = () => {
-        const requestConfig = {
-            withCredentials: true
-        }
-        axios.delete("http://localhost:8080/api/v1/follow/" + props.id, requestConfig)
-            .then(response => {
-                props.unfollow(props.id)
-            })
+        usersApi.unfollowRequest(props.id).then(response => {
+            props.unfollow(props.id)
+        })
     }
     return (
         <div className={s.item}>

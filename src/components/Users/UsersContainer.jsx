@@ -1,38 +1,23 @@
-import {
-    follow,
-    setCurrentPage, setFetching,
-    setTotalUsersCount,
-    setUsers,
-    unfollow
-} from "../../redux/users-reducer";
+import {follow, setCurrentPage, setFetching, setTotalUsersCount, setUsers, unfollow} from "../../redux/users-reducer";
 import {connect} from "react-redux";
 import React from "react";
-import axios from "axios";
 import Users from "./Users";
+import {usersApi} from "../../api/api";
 
 class UsersRestClientContainer extends React.Component {
 
-    __sendRequest = (pageNumber) => {
-        let baseUrl = "http://localhost:8080/api/v1/users"
-        const searchParams = new URLSearchParams();
-        searchParams.append("size", this.props.pageSize)
-        searchParams.append("page", (pageNumber - 1).toString())
-
-        const requestConfig = {
-            withCredentials: true
-        }
-
+    __loadUsers = (pageNumber) => {
         this.props.setFetching(true)
-        axios.get(baseUrl + "?" + searchParams.toString(), requestConfig).then(response => {
-            this.props.setTotalUsersCount(response.data.totalElements)
-            this.props.setUsers(response.data.content)
+        usersApi.getUsersRequest(pageNumber, this.props.pageSize).then(data => {
+            this.props.setTotalUsersCount(data.totalElements)
+            this.props.setUsers(data.content)
             this.props.setFetching(false)
         })
     }
 
     onPageChange = (pageNumber) => {
         this.props.setCurrentPage(pageNumber)
-        this.__sendRequest(pageNumber)
+        this.__loadUsers(pageNumber)
     }
 
 
@@ -52,7 +37,7 @@ class UsersRestClientContainer extends React.Component {
     }
 
     componentDidMount() {
-        this.__sendRequest()
+        this.__loadUsers(1)
     }
 }
 

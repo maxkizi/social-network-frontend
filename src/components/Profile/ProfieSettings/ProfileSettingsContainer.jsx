@@ -1,14 +1,11 @@
 import {connect} from "react-redux";
 import ProfileSettings from "./ProfileSettings";
-import axios from "axios";
 import {setAuth} from "../../../redux/auth-reducer";
+import {authApi} from "../../../api/api";
 
 const ProfileSettingsRestContainer = (props) => {
     const signOut = () => {
-        const requestConfig = {
-            withCredentials: true
-        }
-        axios.get('http://localhost:8080/logout', requestConfig).then(response => {
+        authApi.logoutRequest().then(response => {
             props.setAuth(false)
         })
     }
@@ -17,9 +14,7 @@ const ProfileSettingsRestContainer = (props) => {
         <ProfileSettings signOut={signOut}
                          username={props.username}/>
     )
-
 }
-
 
 const mapStateToProps = (state) => {
     return {
