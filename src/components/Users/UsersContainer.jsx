@@ -1,4 +1,12 @@
-import {follow, setCurrentPage, setFetching, setTotalUsersCount, setUsers, unfollow} from "../../redux/users-reducer";
+import {
+    follow,
+    setCurrentPage,
+    setFetching,
+    setFollowingProgress,
+    setTotalUsersCount,
+    setUsers,
+    unfollow
+} from "../../redux/users-reducer";
 import {connect} from "react-redux";
 import React from "react";
 import Users from "./Users";
@@ -20,18 +28,11 @@ class UsersRestClientContainer extends React.Component {
         this.__loadUsers(pageNumber)
     }
 
-
     render = () => {
         return (
             <div>
-                <Users totalUsersCount={this.props.totalUsersCount}
-                       pageSize={this.props.pageSize}
-                       onPageChange={this.onPageChange}
-                       currentPage={this.props.currentPage}
-                       users={this.props.users}
-                       follow={this.props.follow}
-                       unfollow={this.props.unfollow}
-                       isFetching={this.props.isFetching}/>
+                <Users {...this.props}
+                       onPageChange={this.onPageChange}/>
             </div>
         )
     }
@@ -47,7 +48,8 @@ const mapStateToProps = (state) => {
         totalUsersCount: state.usersState.totalUsersCount,
         currentPage: state.usersState.currentPage,
         pageSize: state.usersState.pageSize,
-        isFetching: state.usersState.isFetching
+        isFetching: state.usersState.isFetching,
+        idsInProgress: state.usersState.idsInProgress
     }
 }
 
@@ -57,7 +59,8 @@ const mapDispatchToProps = {
     unfollow,
     setTotalUsersCount,
     setCurrentPage,
-    setFetching
+    setFetching,
+    setFollowingProgress
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersRestClientContainer)

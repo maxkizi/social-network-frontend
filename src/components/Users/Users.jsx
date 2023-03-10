@@ -4,12 +4,15 @@ import User from "./User/User";
 import Preloader from "../Common/Preloader";
 
 const Users = (props) => {
+
     const getTotalPageNums = () => {
         let pageCount = Math.ceil(props.totalUsersCount / props.pageSize)
         let result = []
         for (let i = 1; i <= pageCount; i++) {
             result.push(
-                <span onClick={() => {props.onPageChange(i)}} className={i === props.currentPage ? s.selectedPageNumber : s.pageNumber}>{i}</span>
+                <span onClick={() => {
+                    props.onPageChange(i)
+                }} className={i === props.currentPage ? s.selectedPageNumber : s.pageNumber}>{i}</span>
             )
         }
         return result
@@ -22,7 +25,10 @@ const Users = (props) => {
                                           country={u.country}
                                           isFollow={u.isFollow}
                                           follow={props.follow}
-                                          unfollow={props.unfollow}/>)
+                                          unfollow={props.unfollow}
+                                          setFollowingProgress={props.setFollowingProgress}
+                                          idsInProgress={props.idsInProgress}/>
+        )
     }
     return (
         <div>

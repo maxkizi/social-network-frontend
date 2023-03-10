@@ -5,13 +5,17 @@ import {usersApi} from "../../../api/api";
 
 const User = (props) => {
     const follow = () => {
+        props.setFollowingProgress(true, props.id)
         usersApi.followRequest(props.id).then(response => {
             props.follow(props.id)
+            props.setFollowingProgress(false, props.id)
         })
     }
     const unfollow = () => {
+        props.setFollowingProgress(true, props.id)
         usersApi.unfollowRequest(props.id).then(response => {
             props.unfollow(props.id)
+            props.setFollowingProgress(false, props.id)
         })
     }
     return (
@@ -31,8 +35,9 @@ const User = (props) => {
                 Country: {props.country}
             </div>
             <div>
-                {props.isFollow ? <button onClick={unfollow}>unfollow</button> :
-                    <button onClick={follow}>follow</button>}
+                {props.isFollow ?
+                    <button disabled={props.idsInProgress.some(id => id === props.id)} onClick={unfollow}>unfollow</button> :
+                    <button disabled={props.idsInProgress.some(id => id === props.id)} onClick={follow}>follow</button>}
             </div>
         </div>
     )
