@@ -4,26 +4,31 @@ import React from 'react';
 
 
 const MyPosts = (props) => {
-    let postElements = props.postData.map(post => <Post text={post.text}/>)
+    let postElements = props.profileState.profileData.posts.map(post => <Post text={post.text}/>)
 
     let newPostElement = React.createRef()
 
     let onAddPost = () => {
-        props.addPost()
+        const newPost = {text: props.profileState.newPostText}
+        const profileDataCopy = JSON.parse(JSON.stringify(props.profileState.profileData))
+        profileDataCopy.posts.push(newPost)
+        props.updateProfile(profileDataCopy)
     }
 
     let onPostTextAreaChange = () => {
         let newText = newPostElement.current.value
-        props.updatePostText(newText)
+        props.updateNewPostText(newText)
     }
 
-    const isAvailableAddPost = props.currentUserId !== props.currentProfileId
+    const isAvailableAddPost = props.currentUserId !== props.profileState.profileData.id
 
+    debugger
     return (
         <div className={s.myPosts}>
             <div>
                 <div>
-                    <textarea hidden={isAvailableAddPost} ref={newPostElement} value={props.newPostText} onChange={onPostTextAreaChange}/>
+                    <textarea hidden={isAvailableAddPost} ref={newPostElement} value={props.profileState.newPostText}
+                              onChange={onPostTextAreaChange}/>
                 </div>
                 <div>
                     <button hidden={isAvailableAddPost} onClick={onAddPost}>Add post</button>

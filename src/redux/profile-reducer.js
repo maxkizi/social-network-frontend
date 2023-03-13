@@ -1,10 +1,9 @@
 import {profileApi} from "../api/api";
 
-const ADD_POST = 'ADD_POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 const SET_CURRENT_PROFILE = 'SET_CURRENT_PROFILE'
+const CLEAR_NEW_POST_TEXT = 'CLEAR_NEW_POST_TEXT'
 
-let postId = 3
 
 const initial_state = {
     newPostText: '',
@@ -13,16 +12,6 @@ const initial_state = {
 
 const profileReducer = (state = initial_state, action) => {
     switch (action.type) {
-        case ADD_POST:
-            let newPost = {
-                postId: postId++,
-                postText: state.newPostText
-            }
-            return {
-                ...state,
-                posts: [...state.posts, newPost],
-                newPostText: ''
-            }
         case UPDATE_NEW_POST_TEXT:
             return {
                 ...state,
@@ -31,6 +20,12 @@ const profileReducer = (state = initial_state, action) => {
         case SET_CURRENT_PROFILE:
             return {
                 ...state, profileData: action.profileData
+            }
+        case CLEAR_NEW_POST_TEXT:
+            debugger
+            return {
+                ...state,
+                newPostText: ''
             }
         default:
             return state
@@ -44,13 +39,14 @@ const setProfileDataSuccess = (profileData) => {
     }
 }
 
-export const addPostActionCreator = () => {
+const clearNewPostText = () => {
     return {
-        type: ADD_POST
+        type: CLEAR_NEW_POST_TEXT
     }
 }
 
-export const updateNewPostTextActionCreator = (newText) => {
+
+export const updateNewPostText = (newText) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newPostText: newText
@@ -61,6 +57,16 @@ export const setProfileData = (id) => {
     return (dispatch) => {
         profileApi.getProfileRequest(id).then(data => {
             dispatch(setProfileDataSuccess(data))
+        })
+    }
+}
+
+export const updateProfile = (updatedProfileData) => {
+    return (dispatch) => {
+        profileApi.updateProfileRequest(updatedProfileData).then(data => {
+            dispatch(setProfileDataSuccess(data))
+            debugger
+            dispatch(clearNewPostText())
         })
     }
 }
