@@ -1,3 +1,5 @@
+import {usersApi} from "../api/api";
+
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
@@ -68,53 +70,84 @@ const usersReducer = (state = initialState, action) => {
     }
 }
 
-export const follow = (userId) => {
-    return {
-        userId: userId,
-        type: FOLLOW
-    }
-}
-
-export const unfollow = (userId) => {
-    return {
-        userId: userId,
-        type: UNFOLLOW
-    }
-}
-
-export const setUsers = (users) => {
+const setUsers = (users) => {
     return {
         users: users,
         type: SET_USERS
     }
 }
 
-export const setTotalUsersCount = (totalUsersCount) => {
+const setTotalUsersCount = (totalUsersCount) => {
     return {
         totalUsersCount: totalUsersCount,
         type: SET_TOTAL_USERS_COUNT
     }
 }
 
-export const setCurrentPage = (pageNumber) => {
-    return {
-        pageNumber: pageNumber,
-        type: SET_CURRENT_PAGE
-    }
-}
-
-export const setFetching = (isFetching) => {
+const setFetching = (isFetching) => {
     return {
         isFetching: isFetching,
         type: SET_FETCHING
     }
 }
 
-export const setFollowingProgress = (inProgress, userId) => {
+const setFollowingProgress = (inProgress, userId) => {
     return {
         inProgress: inProgress,
         userId: userId,
         type: SET_FOLLOWING_PROGRESS
+    }
+}
+const followSuccess = (userId) => {
+    return {
+        userId: userId,
+        type: FOLLOW
+    }
+}
+
+const unfollowSuccess = (userId) => {
+    return {
+        userId: userId,
+        type: UNFOLLOW
+    }
+}
+
+const setCurrentPage = (pageNumber) => {
+    return {
+        pageNumber: pageNumber,
+        type: SET_CURRENT_PAGE
+    }
+}
+
+export const getUsers = (pageNumber, pageSize) => {
+    return (dispatch) => {
+        dispatch(setFetching(true))
+        usersApi.getUsersRequest(pageNumber, pageSize).then(data => {
+            dispatch(setCurrentPage(pageNumber))
+            dispatch(setTotalUsersCount(data.totalElements))
+            dispatch(setUsers(data.content))
+            dispatch(setFetching(false))
+        })
+    }
+}
+
+export const follow = (id) => {
+    return (dispatch) => {
+        dispatch(setFollowingProgress(true, id))
+        usersApi.followRequest(id).then(response => {
+            dispatch(followSuccess(id))
+            dispatch(setFollowingProgress(false, id))
+        })
+    }
+}
+
+export const unfollow = (id) => {
+    return (dispatch) => {
+        dispatch(setFollowingProgress(true, id))
+        usersApi.unfollowRequest(id).then(response => {
+            dispatch(unfollowSuccess(id))
+            dispatch(setFollowingProgress(false, id))
+        })
     }
 }
 

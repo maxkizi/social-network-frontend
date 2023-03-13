@@ -1,22 +1,13 @@
 import s from "./User.module.css"
 import userAvatar from "../../../assets/images/userAvatar.jpg"
 import {NavLink} from "react-router-dom";
-import {usersApi} from "../../../api/api";
 
 const User = (props) => {
     const follow = () => {
-        props.setFollowingProgress(true, props.id)
-        usersApi.followRequest(props.id).then(response => {
-            props.follow(props.id)
-            props.setFollowingProgress(false, props.id)
-        })
+        props.follow(props.id)
     }
     const unfollow = () => {
-        props.setFollowingProgress(true, props.id)
-        usersApi.unfollowRequest(props.id).then(response => {
-            props.unfollow(props.id)
-            props.setFollowingProgress(false, props.id)
-        })
+        props.unfollow(props.id)
     }
     return (
         <div className={s.item}>

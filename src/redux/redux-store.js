@@ -5,6 +5,7 @@ import sidebarReducer from "./sidebar-reducer";
 import usersReducer from "./users-reducer";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import authReducer from "./auth-reducer";
+import thunk from "redux-thunk";
 
 const reducers = {
     profileState: profileReducer,
@@ -15,7 +16,8 @@ const reducers = {
 }
 
 let store = configureStore({
-    reducer: reducers
+    reducer: reducers,
+    middleware: [thunk]
 })
 
 

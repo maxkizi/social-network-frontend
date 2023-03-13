@@ -4,7 +4,6 @@ import {setProfileData} from "../../../redux/profile-reducer";
 import ProfileInfo from "./ProfileInfo";
 import Preloader from "../../Common/Preloader";
 import {withRouter} from "../../../redux/redux-store";
-import {profileApi} from "../../../api/api";
 
 class ProfileInfoRestContainer extends React.Component {
 
@@ -14,9 +13,7 @@ class ProfileInfoRestContainer extends React.Component {
         if (!id) {
             id = this.props.currentUserId
         }
-        profileApi.getProfileRequest(id).then(data => {
-            this.props.setProfileData(data)
-        })
+        this.props.setProfileData(id)
     }
 
     render = () => {

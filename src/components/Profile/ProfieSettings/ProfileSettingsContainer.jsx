@@ -1,13 +1,10 @@
 import {connect} from "react-redux";
 import ProfileSettings from "./ProfileSettings";
-import {setAuth} from "../../../redux/auth-reducer";
-import {authApi} from "../../../api/api";
+import {signOut} from "../../../redux/auth-reducer";
 
 const ProfileSettingsRestContainer = (props) => {
     const signOut = () => {
-        authApi.logoutRequest().then(response => {
-            props.setAuth(false)
-        })
+        props.signOut()
     }
 
     return (
@@ -23,6 +20,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    setAuth
+    signOut
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileSettingsRestContainer)

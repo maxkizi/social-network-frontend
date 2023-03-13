@@ -1,7 +1,6 @@
-import {changeLogin, changePassword, setAuth, setCurrentUserId} from "../../redux/auth-reducer";
+import {changeLogin, changePassword, signIn} from "../../redux/auth-reducer";
 import Login from "./Login";
 import {connect} from "react-redux";
-import {authApi} from "../../api/api";
 
 
 const LoginRestContainer = (props) => {
@@ -11,13 +10,7 @@ const LoginRestContainer = (props) => {
             password: props.password
         }
 
-        authApi.loginRequest(data).then(response => {
-            const id = response.data.id
-            if (id) {
-                props.setCurrentUserId(response.data.id)
-                props.setAuth(true)
-            }
-        })
+        props.signIn(data)
     }
 
     return (
@@ -41,8 +34,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     changeLogin,
     changePassword,
-    setCurrentUserId,
-    setAuth
+    signIn
 }
 
 

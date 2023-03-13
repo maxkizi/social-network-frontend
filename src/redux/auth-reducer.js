@@ -1,3 +1,5 @@
+import {authApi} from "../api/api";
+
 const CHANGE_LOGIN = 'CHANGE_LOGIN'
 const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 const SET_CURRENT_USER_ID = 'SET_CURRENT_USER_ID'
@@ -41,6 +43,20 @@ const authReducer = (state = initialState, action) => {
 }
 
 
+const setCurrentUserId = (currentUserId) => {
+    return {
+        type: SET_CURRENT_USER_ID,
+        currentUserId
+    }
+}
+
+const setAuth = (isAuth) => {
+    return {
+        type: SET_AUTH,
+        isAuth
+    }
+}
+
 export const changeLogin = (login) => {
     return {
         type: CHANGE_LOGIN,
@@ -55,17 +71,24 @@ export const changePassword = (password) => {
     }
 }
 
-export const setCurrentUserId = (currentUserId) => {
-    return {
-        type: SET_CURRENT_USER_ID,
-        currentUserId
+export const signIn = (data) => {
+    return (dispatch) => {
+        authApi.loginRequest(data).then(response => {
+            const id = response.data.id
+            if (id) {
+                dispatch(setCurrentUserId(response.data.id))
+                dispatch(setAuth(true))
+            }
+        })
     }
 }
 
-export const setAuth = (isAuth) => {
-    return {
-        type: SET_AUTH,
-        isAuth
+export const signOut = () => {
+    return (dispatch) => {
+        authApi.logoutRequest().then(response => {
+            dispatch(setAuth(false))
+        })
     }
 }
+
 export default authReducer
