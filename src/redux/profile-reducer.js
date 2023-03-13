@@ -7,18 +7,8 @@ const SET_CURRENT_PROFILE = 'SET_CURRENT_PROFILE'
 let postId = 3
 
 const initial_state = {
-    posts: [
-        {
-            postId: 1,
-            postText: 'My first post'
-        },
-        {
-            postId: 2,
-            postText: 'My second post'
-        }
-    ],
     newPostText: '',
-    profileData: null
+    profileData: {posts: []}
 }
 
 const profileReducer = (state = initial_state, action) => {
