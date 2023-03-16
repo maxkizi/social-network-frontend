@@ -9,7 +9,7 @@ const SET_AUTH = 'SET_AUTH'
 const initialState = {
     login: null,
     password: null,
-    currentUserId: 1,
+    currentUserId: null,
     isAuth: false
 }
 
@@ -87,6 +87,7 @@ export const signOut = () => {
     return (dispatch) => {
         authApi.logoutRequest().then(response => {
             dispatch(setAuth(false))
+            dispatch(setCurrentUserId(null))
         })
     }
 }

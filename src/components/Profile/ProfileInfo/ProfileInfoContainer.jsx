@@ -3,8 +3,8 @@ import {connect} from "react-redux";
 import {setProfileData} from "../../../redux/profile-reducer";
 import ProfileInfo from "./ProfileInfo";
 import Preloader from "../../Common/Preloader";
-import {withRouter} from "../../../redux/redux-store";
-
+import {withRouter} from "../../Hoc/withRouter";
+import {withAuthRedirect} from "../../Hoc/wihtAuthRedirect";
 class ProfileInfoRestContainer extends React.Component {
 
     componentDidMount() {
@@ -29,7 +29,7 @@ class ProfileInfoRestContainer extends React.Component {
 const mapStateToProps = (state) => {
     return {
         profileData: state.profileState.profileData,
-        currentUserId: state.authState.currentUserId
+        currentUserId: state.authState.currentUserId,
     }
 }
 
@@ -38,4 +38,4 @@ const mapDispatchToProps = {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ProfileInfoRestContainer))
+export default connect(mapStateToProps, mapDispatchToProps)(withAuthRedirect(withRouter(ProfileInfoRestContainer)))

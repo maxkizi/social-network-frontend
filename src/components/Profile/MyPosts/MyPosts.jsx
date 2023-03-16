@@ -22,7 +22,6 @@ const MyPosts = (props) => {
 
     const isAvailableAddPost = props.currentUserId !== props.profileState.profileData.id
 
-    debugger
     return (
         <div className={s.myPosts}>
             <div>

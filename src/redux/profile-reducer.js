@@ -22,7 +22,7 @@ const profileReducer = (state = initial_state, action) => {
                 ...state, profileData: action.profileData
             }
         case CLEAR_NEW_POST_TEXT:
-            debugger
+
             return {
                 ...state,
                 newPostText: ''
@@ -65,7 +65,6 @@ export const updateProfile = (updatedProfileData) => {
     return (dispatch) => {
         profileApi.updateProfileRequest(updatedProfileData).then(data => {
             dispatch(setProfileDataSuccess(data))
-            debugger
             dispatch(clearNewPostText())
         })
     }

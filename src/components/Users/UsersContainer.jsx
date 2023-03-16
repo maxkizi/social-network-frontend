@@ -2,6 +2,7 @@ import {follow, getUsers, unfollow} from "../../redux/users-reducer";
 import {connect} from "react-redux";
 import React from "react";
 import Users from "./Users";
+import {withAuthRedirect} from "../Hoc/wihtAuthRedirect";
 
 class UsersRestClientContainer extends React.Component {
 
@@ -30,7 +31,7 @@ const mapStateToProps = (state) => {
         currentPage: state.usersState.currentPage,
         pageSize: state.usersState.pageSize,
         isFetching: state.usersState.isFetching,
-        idsInProgress: state.usersState.idsInProgress
+        idsInProgress: state.usersState.idsInProgress,
     }
 }
 
@@ -40,4 +41,4 @@ const mapDispatchToProps = {
     getUsers
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersRestClientContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(withAuthRedirect(UsersRestClientContainer))
