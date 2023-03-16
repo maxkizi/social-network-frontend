@@ -4,7 +4,15 @@ import React from 'react';
 
 
 const MyPosts = (props) => {
-    let postElements = props.profileState.profileData.posts.map(post => <Post text={post.text}/>)
+    let onDeletePost = (postId) => {
+        const profileDataCopy = JSON.parse(JSON.stringify(props.profileState.profileData))
+        profileDataCopy.posts = profileDataCopy.posts.filter(post => post.id !== postId)
+        props.updateProfile(profileDataCopy)
+    }
+
+    let postElements = props.profileState.profileData.posts.map(post => <Post text={post.text}
+                                                                              id={post.id}
+                                                                              onDeletePost={onDeletePost}/>)
 
     let newPostElement = React.createRef()
 
@@ -14,6 +22,7 @@ const MyPosts = (props) => {
         profileDataCopy.posts.push(newPost)
         props.updateProfile(profileDataCopy)
     }
+
 
     let onPostTextAreaChange = () => {
         let newText = newPostElement.current.value

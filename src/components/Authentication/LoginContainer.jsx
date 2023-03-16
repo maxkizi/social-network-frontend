@@ -17,6 +17,7 @@ const LoginRestContainer = (props) => {
         <Login signIn={signIn}
                login={props.login}
                password={props.password}
+               isAuth={props.isAuth}
                setLoginValue={props.changeLogin}
                setPasswordValue={props.changePassword}/>
     )
@@ -26,7 +27,8 @@ const LoginRestContainer = (props) => {
 const mapStateToProps = (state) => {
     return {
         login: state.authState.login,
-        password: state.authState.password
+        password: state.authState.password,
+        isAuth: state.authState.isAuth
     }
 
 }

@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
 import ProfileSettings from "./ProfileSettings";
 import {signOut} from "../../../redux/auth-reducer";
+import {withAuthRedirect} from "../../Hoc/wihtAuthRedirect";
 
 const ProfileSettingsRestContainer = (props) => {
     const signOut = () => {
@@ -22,4 +23,4 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     signOut
 }
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileSettingsRestContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(withAuthRedirect(ProfileSettingsRestContainer))

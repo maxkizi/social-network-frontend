@@ -1,3 +1,5 @@
+import {Navigate} from "react-router-dom";
+
 const Login = (props) => {
 
     const changeLogin = (e) => {
@@ -12,6 +14,12 @@ const Login = (props) => {
 
     const signIn = () => {
         props.signIn()
+    }
+
+    if (props.isAuth){
+        return (
+            <Navigate to={'/myprofile'}/>
+        )
     }
 
     return (
