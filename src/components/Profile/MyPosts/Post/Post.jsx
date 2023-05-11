@@ -17,7 +17,7 @@ const Post = (props) => {
                 {props.text}
             </div>
             <div className={s.deleteButton}>
-                <button><img src={deleteIcon} onClick={deletePost}/></button>
+                <button hidden={props.isAvailableChangePostData}><img src={deleteIcon} onClick={deletePost}/></button>
             </div>
         </div>
     )

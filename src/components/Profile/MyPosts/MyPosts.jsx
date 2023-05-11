@@ -4,6 +4,7 @@ import React from 'react';
 
 
 const MyPosts = (props) => {
+    const isAvailableChangePostData = props.currentUserId !== props.profileState.profileData.id
     let onDeletePost = (postId) => {
         const profileDataCopy = JSON.parse(JSON.stringify(props.profileState.profileData))
         profileDataCopy.posts = profileDataCopy.posts.filter(post => post.id !== postId)
@@ -12,6 +13,7 @@ const MyPosts = (props) => {
 
     let postElements = props.profileState.profileData.posts.map(post => <Post text={post.text}
                                                                               id={post.id}
+                                                                              isAvailableChangePostData={isAvailableChangePostData}
                                                                               onDeletePost={onDeletePost}/>)
 
     let newPostElement = React.createRef()
@@ -29,17 +31,15 @@ const MyPosts = (props) => {
         props.updateNewPostText(newText)
     }
 
-    const isAvailableAddPost = props.currentUserId !== props.profileState.profileData.id
-
     return (
         <div className={s.myPosts}>
             <div>
                 <div>
-                    <textarea hidden={isAvailableAddPost} ref={newPostElement} value={props.profileState.newPostText}
+                    <textarea hidden={isAvailableChangePostData} ref={newPostElement} value={props.profileState.newPostText}
                               onChange={onPostTextAreaChange}/>
                 </div>
                 <div>
-                    <button hidden={isAvailableAddPost} onClick={onAddPost}>Add post</button>
+                    <button hidden={isAvailableChangePostData} onClick={onAddPost}>Add post</button>
                 </div>
             </div>
             <div>

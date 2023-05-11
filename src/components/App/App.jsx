@@ -7,6 +7,9 @@ import Profile from "../Profile/Profile";
 import AuthContainer from "../Authentication/LoginContainer";
 import HeaderContainer from "../Header/HeaderContainer";
 import ProfileSettingsRestContainer from "../Profile/ProfieSettings/ProfileSettingsContainer";
+import Music from "../Music/Music";
+import News from "../News/News";
+import Settings from "../Settings/Settings";
 
 
 const App = () => {
@@ -20,7 +23,10 @@ const App = () => {
                     <Route path='myprofile' element={<Profile key='myProfile'/>}/>
                     <Route path='myprofile/settings' element={<ProfileSettingsRestContainer/>}/>
                     <Route path='dialogs/*' element={<DialogsContainer/>}/>
+                    <Route path='news' element={<News/>}/>
                     <Route path='users' element={<UsersContainer/>}/>
+                    <Route path='music' element={<Music/>}/>
+                    <Route path='settings' element={<Settings/>}/>
                     <Route path='login' element={<AuthContainer/>}/>
                 </Routes>
             </div>

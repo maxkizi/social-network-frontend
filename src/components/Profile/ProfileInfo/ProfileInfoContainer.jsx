@@ -5,6 +5,8 @@ import ProfileInfo from "./ProfileInfo";
 import Preloader from "../../Common/Preloader";
 import {withRouter} from "../../Hoc/withRouter";
 import {withAuthRedirect} from "../../Hoc/wihtAuthRedirect";
+import {compose} from "redux";
+
 class ProfileInfoRestContainer extends React.Component {
 
     componentDidMount() {
@@ -38,4 +40,7 @@ const mapDispatchToProps = {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(withAuthRedirect(withRouter(ProfileInfoRestContainer)))
+export default compose(
+    withRouter,
+    withAuthRedirect,
+    connect(mapStateToProps, mapDispatchToProps))(ProfileInfoRestContainer)
