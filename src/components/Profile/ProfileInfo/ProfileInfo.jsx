@@ -1,5 +1,6 @@
 import s from "./ProfileInfo.module.css";
 import emptyAvatar from '../../../assets/images/userAvatar.jpg';
+import ProfileStatus from "./ProfileStatus/ProfileStatus";
 
 const ProfileInfo = (props) => {
     const data = props.profileData;
@@ -11,7 +12,7 @@ const ProfileInfo = (props) => {
             </div>
             <div className={s.avaAndDescBlock}>
                 <div>
-                    <img src={data.userPhotoUrl? data.userPhotoUrl: emptyAvatar}/>
+                    <img src={data.userPhotoUrl ? data.userPhotoUrl : emptyAvatar}/>
                 </div>
                 <div>
                     First name: {data.firstName}
@@ -26,7 +27,7 @@ const ProfileInfo = (props) => {
                     Info: {data.info}
                 </div>
                 <div>
-                    Status: {data.status}
+                    Status: <ProfileStatus profileData={data} updateProfile={props.updateProfile}/>
                 </div>
 
             </div>

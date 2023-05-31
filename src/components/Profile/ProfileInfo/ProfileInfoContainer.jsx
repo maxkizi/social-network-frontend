@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {setProfileData} from "../../../redux/profile-reducer";
+import {setProfileData, updateProfile} from "../../../redux/profile-reducer";
 import ProfileInfo from "./ProfileInfo";
 import Preloader from "../../Common/Preloader";
 import {withRouter} from "../../Hoc/withRouter";
@@ -36,7 +36,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    setProfileData
+    setProfileData,
+    updateProfile
 }
 
 

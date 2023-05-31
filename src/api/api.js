@@ -58,7 +58,7 @@ export const profileApi = {
         })
     },
     updateProfileRequest(profileData) {
-        return baseApiAxios.put(`/profile/${profileData.id}`, profileData).then(response => {
+        return baseApiAxios.put(`/profile`, profileData).then(response => {
             return response.data
         })
     }
