@@ -1,8 +1,6 @@
 import {authApi} from "../api/api";
 
-const CHANGE_LOGIN = 'CHANGE_LOGIN'
-const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
-const SET_CURRENT_USER_ID = 'SET_CURRENT_USER_ID'
+const SET_CURRENT_USER = 'SET_CURRENT_USER'
 const SET_AUTH = 'SET_AUTH'
 
 
@@ -15,20 +13,11 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case CHANGE_LOGIN:
+        case SET_CURRENT_USER:
             return {
                 ...state,
-                login: action.login
-            }
-        case CHANGE_PASSWORD:
-            return {
-                ...state,
-                password: action.password
-            }
-        case SET_CURRENT_USER_ID:
-            return {
-                ...state,
-                currentUserId: action.currentUserId
+                currentUserId: action.id,
+                login: action.username
             }
         case SET_AUTH:
             return {
@@ -37,16 +26,17 @@ const authReducer = (state = initialState, action) => {
             }
         default:
             return state
-
     }
 
 }
 
 
-const setCurrentUserId = (currentUserId) => {
+const setCurrentUser = (currentUser) => {
+    debugger
     return {
-        type: SET_CURRENT_USER_ID,
-        currentUserId
+        type: SET_CURRENT_USER,
+        id: currentUser.id,
+        username: currentUser.username
     }
 }
 
@@ -57,26 +47,13 @@ const setAuth = (isAuth) => {
     }
 }
 
-export const changeLogin = (login) => {
-    return {
-        type: CHANGE_LOGIN,
-        login
-    }
-}
-
-export const changePassword = (password) => {
-    return {
-        type: CHANGE_PASSWORD,
-        password
-    }
-}
-
 export const signIn = (data) => {
     return (dispatch) => {
         authApi.loginRequest(data).then(response => {
-            const id = response.data.id
-            if (id) {
-                dispatch(setCurrentUserId(response.data.id))
+            debugger
+            const data = response.data
+            if (data) {
+                dispatch(setCurrentUser(data))
                 dispatch(setAuth(true))
             }
         })
@@ -87,7 +64,7 @@ export const signOut = () => {
     return (dispatch) => {
         authApi.logoutRequest().then(response => {
             dispatch(setAuth(false))
-            dispatch(setCurrentUserId(null))
+            dispatch(setCurrentUser(null))
         })
     }
 }

@@ -1,41 +1,32 @@
-import {changeLogin, changePassword, signIn} from "../../redux/auth-reducer";
 import Login from "./Login";
 import {connect} from "react-redux";
+import {signIn} from "../../redux/auth-reducer";
 
 
 const LoginRestContainer = (props) => {
-    const signIn = () => {
+    const signIn = (formData) => {
         const data = {
-            username: props.login,
-            password: props.password
+            username: formData.login,
+            password: formData.password
         }
-
         props.signIn(data)
     }
 
     return (
         <Login signIn={signIn}
-               login={props.login}
-               password={props.password}
-               isAuth={props.isAuth}
-               setLoginValue={props.changeLogin}
-               setPasswordValue={props.changePassword}/>
+               isAuth={props.isAuth}/>
     )
 }
 
 
 const mapStateToProps = (state) => {
     return {
-        login: state.authState.login,
-        password: state.authState.password,
         isAuth: state.authState.isAuth
     }
 
 }
 
 const mapDispatchToProps = {
-    changeLogin,
-    changePassword,
     signIn
 }
 
