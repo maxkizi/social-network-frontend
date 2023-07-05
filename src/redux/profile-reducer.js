@@ -45,14 +45,6 @@ const clearNewPostText = () => {
     }
 }
 
-
-export const updateNewPostText = (newText) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newPostText: newText
-    }
-}
-
 export const setProfileData = (id) => {
     return (dispatch) => {
         profileApi.getProfileRequest(id).then(data => {
@@ -69,6 +61,5 @@ export const updateProfile = (updatedProfileData) => {
         })
     }
 }
-
 
 export default profileReducer

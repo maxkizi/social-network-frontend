@@ -8,7 +8,7 @@ const Header = (props) => {
             <img
                 src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZrpBmM6ceQxSCtr9Ah9QdJN2GsMxU0g9slCgItZTy&s'/>
             <div className={s.loginBlock}>
-                {props.isAuth ? <NavLink to={'/myprofile/settings'}>{props.currentUsername}</NavLink> : <NavLink to={'/login'}>Login</NavLink>}
+                {props.isAuth ? <NavLink to={'/myprofile/settings'}>{props.currentUsername}</NavLink> : null}
             </div>
         </header>
     )

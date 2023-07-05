@@ -1,6 +1,6 @@
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
-import {updateNewPostText, updateProfile} from "../../../redux/profile-reducer";
+import {updateProfile} from "../../../redux/profile-reducer";
 import {withAuthRedirect} from "../../Hoc/wihtAuthRedirect";
 import {compose} from "redux";
 
@@ -13,7 +13,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    updateNewPostText,
     updateProfile
 }
 
