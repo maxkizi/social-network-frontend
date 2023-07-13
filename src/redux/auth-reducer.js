@@ -1,4 +1,4 @@
-import {authApi} from "../api/api";
+import {authApi} from "../rest/api";
 
 const SET_CURRENT_USER = 'SET_CURRENT_USER'
 const SET_AUTH = 'SET_AUTH'
@@ -32,7 +32,6 @@ const authReducer = (state = initialState, action) => {
 
 
 const setCurrentUser = (currentUser) => {
-    debugger
     return {
         type: SET_CURRENT_USER,
         id: currentUser.id,
@@ -50,10 +49,8 @@ const setAuth = (isAuth) => {
 export const signIn = (data) => {
     return (dispatch) => {
         authApi.loginRequest(data).then(response => {
-            debugger
-            const data = response.data
-            if (data) {
-                dispatch(setCurrentUser(data))
+            if (response.status === 200) {
+                dispatch(setCurrentUser(response.data))
                 dispatch(setAuth(true))
             }
         })
@@ -65,6 +62,15 @@ export const signOut = () => {
         authApi.logoutRequest().then(response => {
             dispatch(setAuth(false))
             dispatch(setCurrentUser(null))
+        })
+    }
+}
+
+export const me = () => {
+    return (dispatch) => {
+        authApi.meRequest().then(resp => {
+            dispatch(setCurrentUser(resp.data))
+            dispatch(setAuth(true))
         })
     }
 }

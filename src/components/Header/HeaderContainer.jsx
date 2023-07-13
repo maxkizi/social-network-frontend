@@ -1,5 +1,6 @@
 import {connect} from "react-redux";
 import Header from "./Header";
+import {me} from "../../redux/auth-reducer";
 
 const mapStateToProps = (state) => {
     return {
@@ -8,4 +9,8 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {})(Header)
+const mapDispatchToProps = {
+    me
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

@@ -7,7 +7,7 @@ const LoginForm = (props) => {
                 <Field placeholder={'login'} name={'login'} component={'input'}/>
             </div>
             <div>
-                <Field placeholder={'password'} name={'password'} component={'input'}/>
+                <Field placeholder={'password'} name={'password'} component={'input'} type={"password"}/>
             </div>
             <div>
                 <button>sign in</button>

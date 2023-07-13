@@ -1,4 +1,4 @@
-import {profileApi} from "../api/api";
+import {profileApi} from "../rest/api";
 
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 const SET_CURRENT_PROFILE = 'SET_CURRENT_PROFILE'

@@ -20,6 +20,11 @@ const authApiAxios = axios.create({
 );
 
 export const authApi = {
+    meRequest() {
+        return authApiAxios.get('/api/v1/auth/me').then(resp => {
+            return resp
+        })
+    },
     loginRequest(data) {
         return authApiAxios.post('/login', data).then(resp => {
                 return resp
