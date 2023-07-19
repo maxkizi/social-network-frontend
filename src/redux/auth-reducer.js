@@ -1,4 +1,5 @@
 import {authApi} from "../rest/api";
+import {stopSubmit} from "redux-form";
 
 const SET_CURRENT_USER = 'SET_CURRENT_USER'
 const SET_AUTH = 'SET_AUTH'
@@ -53,6 +54,9 @@ export const signIn = (data) => {
                 dispatch(setCurrentUser(response.data))
                 dispatch(setAuth(true))
             }
+        }).catch(() =>{
+            console.log('in catch block')
+            dispatch(stopSubmit('login', {_error: 'wrong creds'}))
         })
     }
 }
@@ -68,7 +72,7 @@ export const signOut = () => {
 
 export const me = () => {
     return (dispatch) => {
-        authApi.meRequest().then(resp => {
+       return authApi.meRequest().then(resp => {
             dispatch(setCurrentUser(resp.data))
             dispatch(setAuth(true))
         })

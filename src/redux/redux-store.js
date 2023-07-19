@@ -6,6 +6,7 @@ import usersReducer from "./users-reducer";
 import authReducer from "./auth-reducer";
 import thunk from "redux-thunk";
 import {reducer as formReducer} from 'redux-form'
+import appReducer from "./app-reducer";
 
 const reducers = {
     profileState: profileReducer,
@@ -13,6 +14,7 @@ const reducers = {
     sidebarState: sidebarReducer,
     usersState: usersReducer,
     authState: authReducer,
+    appState: appReducer,
     form: formReducer
 }
 

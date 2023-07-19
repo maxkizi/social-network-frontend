@@ -12,6 +12,9 @@ const LoginForm = (props) => {
             <div>
                 <button>sign in</button>
             </div>
+            <div>
+                {props.error}
+            </div>
         </form>
     )
 }
