@@ -28,6 +28,8 @@ export const initializeApp = () => {
         let promise = dispatch(me())
         promise.then(() => {
             dispatch(finishInitialization())
+        }).catch(() => {
+            dispatch(finishInitialization())
         })
     }
 }
