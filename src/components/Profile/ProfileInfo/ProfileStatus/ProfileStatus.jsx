@@ -1,49 +1,43 @@
-import React from "react";
+import React, {useState} from "react";
 
-class ProfileStatus extends React.Component {
+const ProfileStatus = (props) => {
 
-    state = {
-        editMode: false,
-        status: this.props.profileData.status
+    let [editMode, setEditMode] = useState(false)
+
+    let [status, setStatus] = useState(props.profileData.status)
+
+    const activateEditMode = () => {
+        setEditMode(true)
     }
 
-    activateEditMode = () => {
-        this.setState({
-            editMode: true
-        })
+    const deActivateEditMode = () => {
+        setEditMode(false)
+
+        const profileDataCopy = JSON.parse(JSON.stringify(props.profileData))
+        profileDataCopy.status = status
+        props.updateProfile(profileDataCopy)
     }
 
-    deActivateEditMode = () => {
-        this.setState({
-            editMode: false
-        })
-
-        const profileDataCopy = JSON.parse(JSON.stringify(this.props.profileData))
-        profileDataCopy.status = this.state.status
-        this.props.updateProfile(profileDataCopy)
+    const onChangeStatus = (e) => {
+        setStatus(e.currentTarget.value)
     }
 
-    onChangeStatus = (e) => {
-        this.setState({status: e.currentTarget.value})
-    }
 
-    render() {
-        return (
-            <div>
-                {!this.state.editMode &&
-                    <div>
+    return (
+        <div>
+            {!editMode &&
+                <div>
                         <span
-                            onDoubleClick={this.activateEditMode}>{this.props.profileData.status || 'no status'}</span>
-                    </div>
-                }
-                {this.state.editMode &&
-                    <div>
-                        <textarea onChange={this.onChangeStatus} onBlur={this.deActivateEditMode}/>
-                    </div>
-                }
-            </div>
-        )
-    }
+                            onDoubleClick={activateEditMode}>{props.profileData.status || 'no status'}</span>
+                </div>
+            }
+            {editMode &&
+                <div>
+                    <textarea onChange={onChangeStatus} onBlur={deActivateEditMode}/>
+                </div>
+            }
+        </div>
+    )
 
 
 }
