@@ -33,7 +33,7 @@ const ProfileStatus = (props) => {
             }
             {editMode &&
                 <div>
-                    <textarea onChange={onChangeStatus} onBlur={deActivateEditMode}/>
+                    <textarea onChange={onChangeStatus} onBlur={deActivateEditMode}>{props.profileData.status}</textarea>
                 </div>
             }
         </div>
