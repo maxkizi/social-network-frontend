@@ -70,7 +70,7 @@ const usersReducer = (state = initialState, action) => {
     }
 }
 
-const setUsers = (users) => {
+export const setUsers = (users) => {
     return {
         users: users,
         type: SET_USERS
@@ -98,14 +98,14 @@ const setFollowingProgress = (inProgress, userId) => {
         type: SET_FOLLOWING_PROGRESS
     }
 }
-const followSuccess = (userId) => {
+export const followSuccess = (userId) => {
     return {
         userId: userId,
         type: FOLLOW
     }
 }
 
-const unfollowSuccess = (userId) => {
+export const unfollowSuccess = (userId) => {
     return {
         userId: userId,
         type: UNFOLLOW

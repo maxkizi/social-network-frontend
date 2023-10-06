@@ -12,7 +12,6 @@ class UsersRestClientContainer extends React.Component {
     }
 
     render = () => {
-        console.log("render")
         return (
             <div>
                 <Users {...this.props}

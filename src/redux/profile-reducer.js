@@ -1,6 +1,5 @@
 import {profileApi} from "../rest/api";
 
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 const SET_CURRENT_PROFILE = 'SET_CURRENT_PROFILE'
 const CLEAR_NEW_POST_TEXT = 'CLEAR_NEW_POST_TEXT'
 
@@ -12,17 +11,11 @@ const initial_state = {
 
 const profileReducer = (state = initial_state, action) => {
     switch (action.type) {
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.newPostText
-            }
         case SET_CURRENT_PROFILE:
             return {
                 ...state, profileData: action.profileData
             }
         case CLEAR_NEW_POST_TEXT:
-
             return {
                 ...state,
                 newPostText: ''
